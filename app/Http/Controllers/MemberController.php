@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,39 +14,29 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $kategori = Category::all()->pluck('nama_kategori', 'id_kategori');
-        return view('produk.index', compact('kategori'));
+        return view('member.index');
     }
 
-    public function dataProduk()
+    public function dataMember()
     {
-        $produk = Product::leftJoin('categories', 'categories.id_kategori', 'products.id_kategori')
-            ->select('products.*', 'nama_kategori')
-            ->orderBy('id_produk', 'desc')
-            ->get();
+        $member = Member::orderBy('id_member', 'desc')->get();
 
         return datatables()
-            ->of($produk)
+            ->of($member)
             ->addIndexColumn()
-            ->addColumn('kode_produk', function ($produk) {
-                return '<span class="label label-success">' . $produk->kode_produk . '</span>';
+            ->addColumn('select_all', function ($member) {
+                return '<input type="checkbox" name="select_all" value="' . $member->id_member . '" />';
             })
-            ->addColumn('harga_beli', function ($produk) {
-                return format_uang($produk->harga_beli);
+            ->addColumn('kode_member', function ($member) {
+                return '<span class="label label-success">' . $member->kode_member . '</span>';
             })
-            ->addColumn('harga_jual', function ($produk) {
-                return format_uang($produk->harga_jual);
-            })
-            ->addColumn('stok', function ($produk) {
-                return format_uang($produk->stok);
-            })
-            ->addColumn('aksi', function ($produk) {
+            ->addColumn('aksi', function ($member) {
                 return '
-                    <button onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-edit"></i></button>
-                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="editForm(`' . route('member.update', $member->id_member) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-edit"></i></button>
+                    <button type="button" onclick="deleteData(`' . route('member.destroy', $member->id_member) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_produk'])
+            ->rawColumns(['aksi', 'select_all', 'kode_member'])
             ->make(true);
     }
 
@@ -69,7 +58,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $produk = Product::create($request->all());
+        $member = Member::latest()->first() ?? new Member;
+        $kode_member = $member->kode_member + 1 ?? 1;
+
+        $member1 = new Member;
+        $member1->kode_member = tambah_nol_didepan($kode_member, 5);
+        $member1->nama = $request->nama;
+        $member1->telepon = $request->telepon;
+        $member1->alamat = $request->alamat;
+        $member1->save();
 
         return response()->json('Data berhasil disimpan', 200);
     }
@@ -82,8 +79,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $produk = Product::find($id);
-        return response()->json($produk);
+        $member = Member::find($id);
+        return response()->json($member);
     }
 
     /**
@@ -106,8 +103,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $produk = Product::find($id);
-        $produk->update($request->all());
+        $member = Member::find($id);
+        $member->update($request->all());
 
         return response()->json('Data berhasil diedit', 200);
     }
@@ -120,9 +117,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $produk = Product::find($id);
-        $produk->delete();
+        $member = Member::find($id);
+        $member->delete();
 
         return response(null, 204);
+    }
+
+    public function cetakMember()
+    {
     }
 }
