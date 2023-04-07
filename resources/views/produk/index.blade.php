@@ -14,24 +14,33 @@ Daftar Produk
     <div class="col-lg-12">
         <div class="box">
             <div class="box-header with-border">
-                <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
-                <button class="btn btn-default btn-xs btn-flat"><i class="fa fa-upload"></i> Import</button>
+                <div class="btn-group">
+                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
+                    <button class="btn btn-default btn-xs btn-flat"><i class="fa fa-upload"></i> Import</button>
+                    <button onclick="deleteSelected('{{ route('deleteSelected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                </div>
             </div>
             <div class="box-body table-responsive">
-                <table class="table table-stiped table-bordered">
-                    <thead>
-                        <th width="5%">No</th>
-                        <th>Kode</th>
-                        <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Merk</th>
-                        <th>Harga Beli</th>
-                        <th>Harga Jual</th>
-                        <th>Diskon</th>
-                        <th>Stok</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
-                    </thead>
-                </table>
+                <form action="" class="form-produk">
+                    @csrf
+                    <table class="table table-stiped table-bordered">
+                        <thead>
+                            <th>
+                                <input type="checkbox" name="select_all" id="select_all">
+                            </th>
+                            <th width="5%">No</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Kategori</th>
+                            <th>Merk</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Diskon</th>
+                            <th>Stok</th>
+                            <th width="15%"><i class="fa fa-cog"></i></th>
+                        </thead>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
@@ -53,6 +62,9 @@ Daftar Produk
 
             },
             columns: [{
+                    data: 'select_all',
+                },
+                {
                     data: 'DT_RowIndex',
                     searchable: false,
                     sortable: false
@@ -102,6 +114,10 @@ Daftar Produk
                     });
             }
         });
+
+        $('[name=select_all]').on('click', function() {
+            $(':checkbox').prop('checked', this.checked);
+        })
     });
 
     function addForm(url) {
@@ -153,6 +169,24 @@ Daftar Produk
                     alert('Tidak dapat menghapus data');
                     return;
                 });
+        }
+    }
+
+    function deleteSelected(url) {
+        if ($('input:checked').length > 1) {
+            if (confirm('Yakin akan menghapus data terpilih?')) {
+                $.post(url, $('.form-produk').serialize())
+                    .done((response) => {
+                        table.ajax.reload();
+                    })
+                    .fail((errors) => {
+                        alert('Tidak dapat menghapus data');
+                        return;
+                    });
+            }
+        } else {
+            alert('Pilih data yang akan dihapus');
+            return;
         }
     }
 </script>
