@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -137,5 +139,19 @@ class ProductController extends Controller
         }
 
         return response(null, 204);
+    }
+
+    public function cetakBarcode(Request $request)
+    {
+        $dataProduk = array();
+        foreach ($request->id_produk as $id) {
+            $produk = Product::find($id);
+            $dataProduk[] = $produk;
+        }
+
+        $no = 1;
+        $pdf = PDF::loadView('produk.barcode', compact('dataProduk', 'no'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('produk.pdf');
     }
 }
