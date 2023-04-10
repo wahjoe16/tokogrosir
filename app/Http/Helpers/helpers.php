@@ -14,9 +14,9 @@ function terbilang($angka)
     if ($angka < 12) {
         $terbilang = '' . $baca[$angka];
     } elseif ($angka < 20) {
-        $terbilang = terbilang($angka - 10) . ' belas';
+        $terbilang = terbilang($angka - 10) . ' belas ';
     } elseif ($angka < 100) {
-        $terbilang = terbilang($angka / 10) . ' puluh' . terbilang($angka % 10);
+        $terbilang = terbilang($angka / 10) . ' puluh ' . terbilang($angka % 10);
     } elseif ($angka < 200) {
         $terbilang = ' seratus ' . terbilang($angka - 100);
     } elseif ($angka < 1000) {
