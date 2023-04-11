@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembelian;
 use App\Models\PembelianDetail;
 use App\Models\Product;
 use App\Models\Supplier;
@@ -14,12 +15,13 @@ class PembelianDetailController extends Controller
         $id_pembelian = session('id_pembelian');
         $produk = Product::orderBy('nama_produk', 'asc')->get();
         $supplier = Supplier::find(session('id_supplier'));
+        $diskon = Pembelian::find($id_pembelian)->diskon ?? 0;
 
         if (!$supplier) {
             abort(404);
         }
 
-        return view('pembelian_detail.index', compact('id_pembelian', 'supplier', 'produk'));
+        return view('pembelian_detail.index', compact('id_pembelian', 'supplier', 'produk', 'diskon'));
     }
 
     public function data($id)
@@ -35,6 +37,7 @@ class PembelianDetailController extends Controller
             $row = array();
             $row['kode_produk'] = '<span class="label label-success">' . $item->produk['kode_produk'] . '</span>';
             $row['nama_produk'] = $item->produk['nama_produk'];
+            $row['stok'] = $item->produk['stok'];
             $row['harga_beli'] = 'Rp. ' . format_uang($item->harga_beli);
             $row['jumlah'] = '<input type="number" name="jumlah_" class="form-control input-sm qty" data-id="' . $item->id_pembelian_detail  . '" value="' . $item->jumlah . '">';
             $row['subtotal'] = format_uang($item->subtotal);
@@ -52,6 +55,7 @@ class PembelianDetailController extends Controller
                 <div class="total hide">' . $total . '</div> 
                 <div class="total_item hide">' . $total_item . '</div>',
             'nama_produk' => '',
+            'stok' => '',
             'harga_beli' => '',
             'jumlah' => '',
             'subtotal' => '',

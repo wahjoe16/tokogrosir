@@ -38,6 +38,9 @@ class PembelianController extends Controller
             ->addColumn('supplier', function ($pembelian) {
                 return $pembelian->supplier->nama;
             })
+            ->editColumn('diskon', function ($pembelian) {
+                return $pembelian->diskon . '%';
+            })
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
@@ -102,7 +105,7 @@ class PembelianController extends Controller
                 return 'Rp. ' . format_uang($detail->harga_beli);
             })
             ->addColumn('jumlah', function ($detail) {
-                return 'Rp. ' . format_uang($detail->jumlah);
+                return format_uang($detail->jumlah);
             })
             ->addColumn('subtotal', function ($detail) {
                 return 'Rp. ' . format_uang($detail->subtotal);

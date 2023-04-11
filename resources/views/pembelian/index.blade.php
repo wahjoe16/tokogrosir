@@ -90,8 +90,7 @@ Daftar Pembelian
 
         table1 = $('.table-detail').DataTable({
             processing: true,
-            bsort: false,
-            dom: 'Brt',
+            autoWidth: false,
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,

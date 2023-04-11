@@ -13,6 +13,7 @@
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
+                        <th>Stok Tersedia</th>
                         <th>Harga Beli</th>
                         <th><i class="fa fa-cog"></i></th>
                     </thead>
@@ -22,6 +23,7 @@
                             <td width="5%">{{ $key+1 }}</td>
                             <td><span class="label label-success">{{ $item->kode_produk }}</span></td>
                             <td>{{ $item->nama_produk }}</td>
+                            <td>{{ $item->stok }}</td>
                             <td>{{ $item->harga_beli }}</td>
                             <td>
                                 <a href="#" class="btn btn-info btn-xs btn-flat" onclick="pilihProduk('{{ $item->id_produk }}', '{{ $item->kode_produk }}')">

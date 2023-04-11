@@ -78,6 +78,7 @@ Transaksi Pembelian
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
+                        <th>Stok Tersedia</th>
                         <th>Harga</th>
                         <th width="15%">Jumlah</th>
                         <th>Subtotal</th>
@@ -107,7 +108,7 @@ Transaksi Pembelian
                             <div class="form-group row">
                                 <label for="diskon" class="col-lg-2 control-label">Diskon</label>
                                 <div class="col-lg-8">
-                                    <input type="number" name="diskon" id="diskon" class="form-control" value="0">
+                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ $diskon }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -155,6 +156,9 @@ Transaksi Pembelian
                     },
                     {
                         data: 'nama_produk'
+                    },
+                    {
+                        data: 'stok'
                     },
                     {
                         data: 'harga_beli'
