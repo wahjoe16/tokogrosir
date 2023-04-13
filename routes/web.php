@@ -4,6 +4,8 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembelianDetailController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanDetailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -56,4 +58,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pembelian_detail/loadform/{diskon}/{total}', [PembelianDetailController::class, 'loadForm'])->name('pembelianDetailLoadForm');
     Route::resource('/pembelian_detail', PembelianDetailController::class)
         ->except('create', 'show', 'edit');
+
+    Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::get('/penjualan/data', [PenjualanController::class, 'data'])->name('penjualan.data');
+    Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
+    Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+
+    Route::get('/traksaksi-baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
+    Route::resource('/transaksi', PenjualanController::class)
+        ->except('create');
+
+    Route::get('/traksaksi_detail/{id}/data', [PenjualanDetailController::class, 'data'])->name('transaksi_detail.data');
+    Route::get('/transaksi_detail/loadform/{diskon}/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.load_form');
+    Route::resource('/transaksi_detail', PenjualanDetailController::class)
+        ->except('show');
 });

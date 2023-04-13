@@ -25,7 +25,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="#">
+                <a href="{{ route('transaksi_detail.index') }}">
                     <i class="fa fa-shopping-cart"></i> <span>Kasir</span>
 
                 </a>
@@ -69,25 +69,25 @@
                 Transaksi
             </li>
             <li>
-                <a href="{{ route('pembelian.index') }}">
-                    <i class="fa fa-download"></i> <span>Pembelian</span>
-
-                </a>
-            </li>
-            <li>
                 <a href="#">
                     <i class="fa fa-money"></i> <span>Pengeluaran</span>
 
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-clock-o"></i> <span>Transaksi Lama</span>
+                <a href="{{ route('pembelian.index') }}">
+                    <i class="fa fa-download"></i> <span>Pembelian</span>
 
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('penjualan.index') }}">
+                    <i class="fa fa-upload"></i> <span>Penjualan</span>
+
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('transaksi.baru') }}">
                     <i class="fa fa-clock-o"></i> <span>Transaksi Baru</span>
 
                 </a>
