@@ -14,7 +14,6 @@ Daftar Penjualan
     <div class="col-lg-12">
         <div class="box">
             <div class="box-body table-responsive">
-                @csrf
                 <table class="table table-stiped table-bordered table-penjualan">
                     <thead>
                         <th width="5%">No</th>

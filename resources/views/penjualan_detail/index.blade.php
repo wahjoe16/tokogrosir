@@ -79,7 +79,7 @@ Transaksi Penjualan
                         <div class="tampil-terbilang"></div>
                     </div>
                     <div class="col-lg-4">
-                        <form action="{{ route('transaksi.store') }}" method="post" class="form-penjualan">
+                        <form action="{{ route('transaksi.simpan') }}" method="post" class="form-penjualan">
                             @csrf
                             <input type="hidden" name="id_penjualan" value="{{ $id_penjualan }}">
                             <input type="hidden" name="total" id="total">
@@ -134,7 +134,7 @@ Transaksi Penjualan
             </div>
 
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm btn-flat btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
+                <button type="submit" class="btn btn-primary btn-sm btn-flat btn-simpan pull-right"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@ Transaksi Penjualan
                 serverSide: true,
                 autoWidth: false,
                 ajax: {
-                    url: '{{ route("transaksi_detail.data", $id_penjualan) }}',
+                    url: '{{ route("transaksi.data", $id_penjualan) }}',
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -218,7 +218,7 @@ Transaksi Penjualan
                 return;
             }
 
-            $.post(`{{ url('/transaksi_detail') }}/${id}`, {
+            $.post(`{{ url('/transaksi') }}/${id}`, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'put',
                     'jumlah': jumlah
@@ -273,7 +273,7 @@ Transaksi Penjualan
     }
 
     function tambahProduk() {
-        $.post('{{ route("transaksi_detail.store") }}', $('.form-produk').serialize())
+        $.post('{{ route("transaksi.store") }}', $('.form-produk').serialize())
             .done(response => {
                 $('#kode_produk').focus();
                 table.ajax.reload(() => loadForm($('#diskon').val()));
@@ -321,7 +321,7 @@ Transaksi Penjualan
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`{{ url('/transaksi_detail/loadform') }}/${diskon}/${$('.total').text()}/${diterima}`)
+        $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${diterima}`)
             .done(response => {
                 $('#totalrp').val('Rp. ' + response.totalrp);
                 $('#bayarrp').val('Rp. ' + response.bayarrp);

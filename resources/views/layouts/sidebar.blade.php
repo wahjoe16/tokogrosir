@@ -25,7 +25,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="{{ route('transaksi_detail.index') }}">
+                <a href="{{ route('transaksi.index') }}">
                     <i class="fa fa-shopping-cart"></i> <span>Kasir</span>
 
                 </a>
@@ -69,7 +69,7 @@
                 Transaksi
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('pengeluaran.index') }}">
                     <i class="fa fa-money"></i> <span>Pengeluaran</span>
 
                 </a>
