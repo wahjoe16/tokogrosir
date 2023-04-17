@@ -97,7 +97,7 @@
                 Report
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('laporan.index') }}">
                     <i class="fa fa-file-pdf-o"></i> <span>Laporan</span>
 
                 </a>
@@ -107,7 +107,7 @@
                 SISTEM
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('user.index') }}">
                     <i class="fa fa-users"></i> <span>User</span>
 
                 </a>
