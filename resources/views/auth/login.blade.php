@@ -4,7 +4,10 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/') }}"><b>Toko</b>Grosir</a>
+        <a href="{{ url('/') }}">
+            <b>Toko</b>Grosir
+            <br><img src="{{ url($setting->path_logo) }}" width="100" alt="">
+        </a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
